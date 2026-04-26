@@ -80,12 +80,17 @@ canvas.ptc { position: absolute; inset: 0; width: 100%; height: 100%; display: n
 .bh1:active { background: var(--teal-h); }
 .bh2 { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); padding: 12px 22px; border-radius: 10px; font-size: .95rem; font-weight: 700; cursor: pointer; min-height: 50px; transition: all .2s; }
 .bh2:active { background: rgba(255,255,255,.1); }
+.btn-si { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.28); padding: 11px 18px; border-radius: 12px; font-size: .9rem; font-weight: 700; min-height: 48px; cursor: pointer; transition: background .2s, border-color .2s; }
+.btn-si:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.4); }
+.btn-p { background: var(--teal); color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: .95rem; font-weight: 700; cursor: pointer; min-height: 48px; transition: background .2s, transform .2s; }
+.btn-p:hover { background: var(--teal-h); transform: translateY(-1px); }
 /* Search bar — stacked on mobile */
 .srch-wrap { padding: 0 4px; }
-.srch { display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+.srch { display: flex; flex-direction: column; max-width: 760px; margin: 0 auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.15); }
+.srch input, .srch select { flex: 1; min-width: 0; }
 .srch input { padding: 14px 16px; border: none; outline: none; font-size: 16px; color: var(--text); border-bottom: 1px solid var(--border); -webkit-appearance: none; }
 .srch select { padding: 13px 16px; border: none; outline: none; font-size: 16px; color: var(--muted); background: #fff; cursor: pointer; border-bottom: 1px solid var(--border); -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23607080' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-.srch-btn { background: var(--teal); color: #fff; border: none; padding: 15px 20px; font-size: 1rem; font-weight: 700; cursor: pointer; min-height: 52px; }
+.srch-btn { background: var(--teal); color: #fff; border: none; padding: 15px 20px; font-size: 1rem; font-weight: 700; cursor: pointer; min-height: 52px; min-width: 140px; }
 .srch-btn:active { background: var(--teal-h); }
 
 /* ===== TICKER ===== */
@@ -198,7 +203,7 @@ canvas.ptc { position: absolute; inset: 0; width: 100%; height: 100%; display: n
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 /* ===== VALUES ===== */
-.vals-g { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.vals-g { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
 .val-c { background: #fff; border-radius: var(--r); padding: 20px 16px; box-shadow: var(--sh1); border-left: 4px solid var(--teal); }
 .val-ico { font-size: 1.5rem; margin-bottom: 8px; }
 .val-c h3 { color: var(--navy); margin-bottom: 4px; }
@@ -375,8 +380,8 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
   .hbg { display: none; }
   .prj-g { grid-template-columns: repeat(3, 1fr); }
   .con-g { grid-template-columns: repeat(3, 1fr); }
-  .vals-g { grid-template-columns: repeat(4, 1fr); }
-  .stat-g { grid-template-columns: repeat(4, 1fr); }
+  .vals-g { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .stat-g { grid-template-columns: repeat(3, 1fr); }
   .test-g { grid-template-columns: repeat(4, 1fr); }
   .sec-g { grid-template-columns: repeat(4, 1fr); }
   .steps { grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -411,9 +416,10 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
     <ul class="nav-links">
       <li><a href="#projects">Find Projects</a></li>
       <li><a href="#consultants">Find Consultants</a></li>
+      <li><a href="#about">About Us</a></li>
       <li><a href="#sectors">Sectors</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="#ai">AI Match</a></li>
+      <li><a href="#ai">AI Match Beta</a></li>
     </ul>
     <div class="nav-desk-acts">
       <button class="btn-si" onclick="openM('loginMo')">Sign In</button>
@@ -432,9 +438,10 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
   <ul class="nav-drawer-links">
     <li><a href="#projects" onclick="closeDrawer()">📋 Find Projects</a></li>
     <li><a href="#consultants" onclick="closeDrawer()">👤 Find Consultants</a></li>
+    <li><a href="#about" onclick="closeDrawer()">ℹ️ About Us</a></li>
     <li><a href="#sectors" onclick="closeDrawer()">🏷 Sectors</a></li>
     <li><a href="#how" onclick="closeDrawer()">⚙️ How It Works</a></li>
-    <li><a href="#ai" onclick="closeDrawer()">🤖 AI Matching</a></li>
+    <li><a href="#ai" onclick="closeDrawer()">🤖 AI Match Beta</a></li>
   </ul>
   <div class="nav-drawer-btns">
     <button class="btn-si" onclick="closeDrawer();openM('loginMo')">Sign In</button>
@@ -451,8 +458,8 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
     <h1>Connect. Collaborate. <span class="hl" id="hTagline">Create Impact.</span></h1>
     <p class="hero-sub" id="hSub">India's marketplace connecting freelance consultants with mission-driven organizations across Health, Education, Climate, Livelihoods, and more.</p>
     <div class="aud-tog">
-      <button class="aud-btn on" id="audOrg" onclick="setAud('org')">🏢 Hiring a Consultant</button>
-      <button class="aud-btn" id="audCon" onclick="setAud('con')">👤 Finding Projects</button>
+      <button class="aud-btn on" id="audOrg" onclick="setAud('org')">🏢 Consulting Agency</button>
+      <button class="aud-btn" id="audCon" onclick="setAud('con')">👤 Consultant</button>
     </div>
     <div class="hero-ctas">
       <button class="bh1" id="hCta1">Find a Consultant</button>
@@ -515,14 +522,14 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
   </div>
 </section>
 
-<!-- LIVE PROJECTS -->
-<section class="sec" id="projects">
+<section class="sec" id="about">
   <div class="container">
-    <div class="sec-hd reveal">
-      <div><span class="lbl">For Consultants</span><h2 class="stitle">Live Projects — Apply Now</h2><p class="ssub">Short-term engagements across India's development sector.</p></div>
-      <button class="btn-p" onclick="openM('loginMo')">Browse All →</button>
+    <div class="tc reveal"><span class="lbl">About Us</span><h2 class="stitle">Built to scale impact consulting in India</h2><p class="ssub tc">FIC connects development organizations and freelance consultants through trusted matching, faster onboarding, and transparent project delivery.</p></div>
+    <div class="vals-g">
+      <div class="val-c reveal"><div class="val-ico">🚀</div><h3>Speed to match</h3><p>Organizations get qualified consultant shortlists in hours, not weeks.</p></div>
+      <div class="val-c reveal"><div class="val-ico">🤝</div><h3>Trust-first platform</h3><p>Profiles are reviewed and surfaced based on real project fit.</p></div>
+      <div class="val-c reveal"><div class="val-ico">💼</div><h3>Project-ready talent</h3><p>Consultants are curated for impact work across public, nonprofit, and corporate sectors.</p></div>
     </div>
-    <div class="prj-g" id="prjGrid"></div>
   </div>
 </section>
 
@@ -534,6 +541,17 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
       <button class="btn-p" onclick="openM('loginMo')">View All →</button>
     </div>
     <div class="con-g" id="conGrid"></div>
+  </div>
+</section>
+
+<!-- LIVE PROJECTS -->
+<section class="sec" id="projects">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div><span class="lbl">For Consultants</span><h2 class="stitle">Live Projects — Apply Now</h2><p class="ssub">Short-term engagements across India's development sector.</p></div>
+      <button class="btn-p" onclick="openM('loginMo')">Browse All →</button>
+    </div>
+    <div class="prj-g" id="prjGrid"></div>
   </div>
 </section>
 
@@ -555,7 +573,7 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
     </div>
     <div id="howOrg" class="how-pnl">
       <div class="steps">
-        <div class="step reveal"><div class="step-n">1</div><div class="step-body"><h3>Register & Verify</h3><p>Create your organization profile with sector focus and GST details in minutes.</p></div></div>
+        <div class="step reveal"><div class="step-n">1</div><div class="step-body"><h3>Register & Verify</h3><p>Create your organization profile with sector focus and verification details in minutes.</p></div></div>
         <div class="step reveal"><div class="step-n">2</div><div class="step-body"><h3>Post a Project</h3><p>Describe scope, timeline, and budget. Post privately or publicly on FIC.</p></div></div>
         <div class="step reveal"><div class="step-n">3</div><div class="step-body"><h3>Match & Shortlist</h3><p>AI surfaces the best-fit consultants. Compare and invite your shortlist.</p></div></div>
         <div class="step reveal"><div class="step-n">4</div><div class="step-body"><h3>Contract & Pay</h3><p>Digital contracts, milestone tracking, and secure escrow payments.</p></div></div>
@@ -580,7 +598,7 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
       <div class="val-c reveal"><div class="val-ico">💡</div><h3>Instant Discovery</h3><p>Find the right consultant or project in minutes using AI-powered search.</p></div>
       <div class="val-c reveal"><div class="val-ico">✅</div><h3>Perfect Matching</h3><p>Framework-driven compatibility scoring across sector, skills, and experience.</p></div>
       <div class="val-c reveal"><div class="val-ico">⭐</div><h3>Quality Outcomes</h3><p>Milestone contracts and mutual rating systems ensure exceptional results.</p></div>
-      <div class="val-c reveal"><div class="val-ico">🔒</div><h3>Verified & Trusted</h3><p>All consultants are GST and identity verified before appearing on the platform.</p></div>
+      <div class="val-c reveal"><div class="val-ico">🔒</div><h3>Verified & Trusted</h3><p>All consultants are identity verified before appearing on the platform.</p></div>
     </div>
   </div>
 </section>
@@ -591,7 +609,7 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
     <div class="ai-lay">
       <div class="ai-desc reveal">
         <span class="lbl">Powered by AI</span>
-        <h2 class="stitle">AI That Works for Both Sides</h2>
+        <h2 class="stitle">AI Match Beta for Both Sides</h2>
         <p class="ssub">Describe your need in plain language — our AI surfaces the best matches instantly.</p>
         <ul class="ai-feats">
           <li>🏢 <strong style="color:#fff">Orgs:</strong> describe your project → get matched consultants</li>
@@ -625,7 +643,6 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
       <div class="stat-c reveal"><div class="stat-n"><span id="c1" class="teal">0</span>+</div><div class="stat-l">Verified Consultants</div></div>
       <div class="stat-c reveal"><div class="stat-n"><span id="c2" class="teal">0</span>+</div><div class="stat-l">Live Projects</div></div>
       <div class="stat-c reveal"><div class="stat-n"><span id="c3" class="teal">0</span>+</div><div class="stat-l">Successful Matches</div></div>
-      <div class="stat-c reveal"><div class="stat-n">₹<span id="c4" class="teal">0</span>Cr+</div><div class="stat-l">Consultant Earnings</div></div>
     </div>
   </div>
 </section>
@@ -712,7 +729,6 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
       <div class="fr"><div class="fg"><label>Email</label><input type="email" placeholder="arjun@email.com" autocomplete="email" inputmode="email"></div><div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel"></div></div>
       <div class="fr"><div class="fg"><label>Primary Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>Financial Inclusion</option><option>MSME</option><option>Livelihoods</option><option>ESG</option><option>IT / AI</option></select></div><div class="fg"><label>Experience</label><select><option>1–3 years</option><option>4–7 years</option><option>8–12 years</option><option>13+ years</option></select></div></div>
       <div class="fr"><div class="fg"><label>Per Diem (₹/day)</label><input type="text" placeholder="e.g. 8500" inputmode="numeric"></div><div class="fg"><label>LinkedIn URL</label><input type="url" placeholder="linkedin.com/in/..." autocomplete="url"></div></div>
-      <div class="fg"><label>GST Number (optional)</label><input type="text" placeholder="27ABCDE1234F1Z5"></div>
       <div class="fg"><label>Password</label><input type="password" placeholder="Create a strong password" autocomplete="new-password"></div>
       <div class="chk-row"><input type="checkbox"><label>I agree to the <a>Privacy Policy</a> and <a>Terms of Service</a></label></div>
       <button class="btn-p btn-f" onclick="handleReg('consultant')">Create Profile — It's Free</button>
@@ -721,7 +737,7 @@ table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vert
       <div class="fr"><div class="fg"><label>Organization Name</label><input type="text" placeholder="Org Name"></div><div class="fg"><label>Type</label><select><option>NGO / Foundation</option><option>CSR / Corporate</option><option>Government / Multilateral</option><option>MSME / Startup</option></select></div></div>
       <div class="fr"><div class="fg"><label>Contact Person</label><input type="text" placeholder="SPOC name"></div><div class="fg"><label>Designation</label><input type="text" placeholder="Program Manager"></div></div>
       <div class="fr"><div class="fg"><label>Email</label><input type="email" placeholder="contact@org.com" autocomplete="email" inputmode="email"></div><div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel"></div></div>
-      <div class="fr"><div class="fg"><label>Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>MSME</option><option>Livelihoods</option></select></div><div class="fg"><label>GST Number</label><input type="text" placeholder="For billing"></div></div>
+      <div class="fr"><div class="fg"><label>Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>MSME</option><option>Livelihoods</option></select></div></div>
       <div class="fg"><label>Password</label><input type="password" placeholder="Create a strong password" autocomplete="new-password"></div>
       <div class="chk-row"><input type="checkbox"><label>I agree to the <a>Privacy Policy</a> and <a>Terms of Service</a></label></div>
       <button class="btn-p btn-f" onclick="handleReg('organization')">Register — Free</button>
@@ -962,7 +978,7 @@ function initReveal(){
 // ===== COUNTERS =====
 function initCounters(){
   if(!('IntersectionObserver' in window))return;
-  const targets=[{id:'c1',v:1247},{id:'c2',v:156},{id:'c3',v:842},{id:'c4',v:4.2,d:1}];
+  const targets=[{id:'c1',v:1247},{id:'c2',v:156},{id:'c3',v:842}];
   const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done=1;targets.forEach(t=>{const el=document.getElementById(t.id);if(!el)return;let s=0,inc=t.v/80;const tm=setInterval(()=>{s=Math.min(s+inc,t.v);el.textContent=t.d?s.toFixed(1):Math.floor(s).toLocaleString('en-IN');if(s>=t.v)clearInterval(tm);},20);});}});},{threshold:.3});
   const el=document.getElementById('stats');if(el)obs.observe(el);
 }
@@ -1050,20 +1066,35 @@ async function sendAI(){
   const inp=document.getElementById('aiInp');
   const msg=inp.value.trim();if(!msg)return;
   addAIMsg(msg,'user');inp.value='';
-  aiHist.push({role:'user',content:`[Mode:${aiMode}] ${msg}`});
   const btn=document.getElementById('aiSnd');btn.disabled=true;
   const typing=addAITyping();
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:AISYS,messages:aiHist})});
-    const data=await res.json();typing.remove();
-    const txt=data.content[0].text;
-    let parsed;try{parsed=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{addAIMsg(txt,'bot');btn.disabled=false;return;}
-    addAIMsg(parsed.message,'bot');
-    if(parsed.consultants)renderAICons(parsed.consultants);
-    if(parsed.projects)renderAIPrjs(parsed.projects);
-    aiHist.push({role:'assistant',content:txt});
-  }catch{typing.remove();addAIMsg("Connection issue — please try again!",'bot');}
+  await new Promise(r=>setTimeout(r,250));
+  const result = generateLocalMatch(msg);
+  typing.remove();
+  addAIMsg(result.message,'bot');
+  if(result.consultants)renderAICons(result.consultants);
+  if(result.projects)renderAIPrjs(result.projects);
   btn.disabled=false;
+}
+function generateLocalMatch(msg){
+  const query = msg.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(Boolean);
+  const scoreText = text => query.reduce((sum,token)=>sum + (text.includes(token)?1:0),0);
+  if(aiMode==='org'){
+    let consultants = CONSULTANTS.map(c=>({
+      ...c,
+      score: scoreText([c.name,c.role,c.sectors.join(' '),c.exp,c.rate].join(' ').toLowerCase()) + (c.top?1:0) + (c.avail?1:0)
+    })).sort((a,b)=>b.score - a.score || b.rating - a.rating);
+    if(!consultants.some(c=>c.score>0)) consultants = CONSULTANTS.slice().sort((a,b)=>b.rating - a.rating).slice(0,3);
+    else consultants = consultants.filter(c=>c.score>0).slice(0,3);
+    return {message:'Based on your brief, here are strong consultant matches for your need.',consultants};
+  }
+  let projects = PROJECTS.map(p=>({
+    ...p,
+    score: scoreText([p.title,p.org,p.sector,p.type,p.loc,p.desc,p.skills.join(' ')].join(' ').toLowerCase()) + (p.apps>10?1:0)
+  })).sort((a,b)=>b.score - a.score || parseInt(b.budget.replace(/[^0-9]/g,''),10) - parseInt(a.budget.replace(/[^0-9]/g,''),10));
+  if(!projects.some(p=>p.score>0)) projects = PROJECTS.slice().sort((a,b)=>b.apps - a.apps).slice(0,3);
+  else projects = projects.filter(p=>p.score>0).slice(0,3);
+  return {message:'Here are three project opportunities matched to your background.',projects};
 }
 function addAIMsg(msg,type){const c=document.getElementById('aiChat');const d=document.createElement('div');d.className=`ai-msg ${type}`;d.textContent=msg;c.appendChild(d);c.scrollTop=c.scrollHeight;return d;}
 function addAITyping(){const c=document.getElementById('aiChat');const d=document.createElement('div');d.className='ai-typing';d.textContent='FIC AI is thinking...';c.appendChild(d);c.scrollTop=c.scrollHeight;return d;}

@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B3A5C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>FIC — Freelance Impact Consultants</title>
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E2D3D; background: #fff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+* { -webkit-tap-highlight-color: transparent; }
+button { font-family: inherit; }
+
+/* ===== VARIABLES ===== */
+:root {
+  --navy:#1B3A5C; --navy-d:#0F2540; --navy-m:#142d47;
+  --teal:#0D8A7E; --teal-h:#0A6E64; --teal-lite:rgba(13,138,126,.12);
+  --bg:#EBF4F8; --white:#fff; --text:#1E2D3D; --muted:#607080; --border:#D8E3EC;
+  --sh1:0 2px 12px rgba(0,0,0,.07); --sh2:0 8px 28px rgba(0,0,0,.12); --sh3:0 16px 48px rgba(0,0,0,.18);
+  --r:14px; --r2:20px; --tr:.3s cubic-bezier(.4,0,.2,1);
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+/* ===== LAYOUT ===== */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 16px; padding-left: max(16px, env(safe-area-inset-left, 16px)); padding-right: max(16px, env(safe-area-inset-right, 16px)); }
+.sec { padding: 52px 0; }
+.lbl { font-size: .7rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; display: block; }
+.stitle { color: var(--navy); margin-bottom: 8px; font-size: clamp(1.3rem, 5vw, 2.1rem); font-weight: 700; }
+.ssub { color: var(--muted); font-size: .95rem; line-height: 1.7; }
+.tc { text-align: center; }
+.tc .ssub { margin: 8px auto 0; max-width: 500px; }
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.vis { opacity: 1; transform: none; }
+
+/* ===== NAVBAR ===== */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; transition: background .3s, box-shadow .3s; padding-top: env(safe-area-inset-top, 0px); }
+.nav.scrolled { background: rgba(15,37,64,.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 2px 20px rgba(0,0,0,.25); }
+.nav-in { display: flex; align-items: center; height: 56px; padding: 0 16px; padding-left: max(16px, env(safe-area-inset-left, 16px)); padding-right: max(16px, env(safe-area-inset-right, 16px)); max-width: 1180px; margin: 0 auto; }
+.logo { font-size: 1.5rem; font-weight: 900; cursor: pointer; flex-shrink: 0; line-height: 1; }
+.logo .f { color: #fff; }
+.logo .ic { color: var(--teal); }
+/* Desktop nav links — hidden on mobile by default */
+.nav-links { display: none; }
+.nav-desk-acts { display: none; }
+/* Hamburger — always visible on mobile */
+.hbg { display: flex; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.25); color: #fff; font-size: 1.1rem; cursor: pointer; margin-left: auto; padding: 0; border-radius: 8px; line-height: 1; width: 44px; height: 44px; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* ===== MOBILE NAV DRAWER ===== */
+.nav-drawer { display: none; position: fixed; inset: 0; background: var(--navy-d); z-index: 2000; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.nav-drawer.open { display: flex; }
+.nav-drawer-top { display: flex; align-items: center; justify-content: space-between; padding: 16px; padding-top: max(20px, env(safe-area-inset-top, 20px)); padding-left: max(16px, env(safe-area-inset-left, 16px)); padding-right: max(16px, env(safe-area-inset-right, 16px)); border-bottom: 1px solid rgba(255,255,255,.08); }
+.nav-drawer-close { background: rgba(255,255,255,.1); border: none; color: #fff; font-size: 1.2rem; cursor: pointer; width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.nav-drawer-links { list-style: none; padding: 8px 0; flex: 1; }
+.nav-drawer-links li a { display: flex; align-items: center; padding: 16px 20px; padding-left: max(20px, env(safe-area-inset-left, 20px)); color: rgba(255,255,255,.88); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 1rem; font-weight: 500; }
+.nav-drawer-btns { padding: 16px 20px; padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)); padding-left: max(20px, env(safe-area-inset-left, 20px)); padding-right: max(20px, env(safe-area-inset-right, 20px)); display: flex; flex-direction: column; gap: 10px; border-top: 1px solid rgba(255,255,255,.08); }
+.nav-drawer-btns button { padding: 14px; font-size: 1rem; border-radius: 10px; width: 100%; min-height: 50px; font-weight: 700; cursor: pointer; }
+
+/* ===== HERO ===== */
+.hero { position: relative; display: flex; align-items: center; min-height: 100svh; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0F2540 0%, #1B3A5C 55%, #0D4A6E 100%); }
+canvas.ptc { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+.hero-c { position: relative; z-index: 2; text-align: center; width: 100%; padding: max(80px, calc(env(safe-area-inset-top, 0px) + 80px)) 20px max(40px, calc(env(safe-area-inset-bottom, 0px) + 40px)); }
+.hero-ey { font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; display: block; }
+.hero h1 { color: #fff; font-size: clamp(1.9rem, 8vw, 3.2rem); font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
+.hero h1 .hl { color: var(--teal); display: block; }
+.hero-sub { color: rgba(255,255,255,.72); font-size: clamp(.9rem, 3.5vw, 1.05rem); margin: 12px auto 20px; line-height: 1.7; max-width: 520px; }
+/* Audience toggle */
+.aud-tog { display: inline-flex; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 50px; padding: 4px; margin-bottom: 20px; max-width: 100%; }
+.aud-btn { padding: 9px 16px; border-radius: 50px; font-size: .84rem; font-weight: 700; cursor: pointer; border: none; transition: all var(--tr); color: rgba(255,255,255,.65); background: transparent; min-height: 40px; white-space: nowrap; }
+.aud-btn.on { background: #fff; color: var(--navy); }
+.hero-ctas { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.bh1 { background: var(--teal); color: #fff; border: none; padding: 13px 22px; border-radius: 10px; font-size: .95rem; font-weight: 700; cursor: pointer; min-height: 50px; transition: background .2s; }
+.bh1:active { background: var(--teal-h); }
+.bh2 { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); padding: 12px 22px; border-radius: 10px; font-size: .95rem; font-weight: 700; cursor: pointer; min-height: 50px; transition: all .2s; }
+.bh2:active { background: rgba(255,255,255,.1); }
+/* Search bar — stacked on mobile */
+.srch-wrap { padding: 0 4px; }
+.srch { display: flex; flex-direction: column; max-width: 640px; margin: 0 auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+.srch input { padding: 14px 16px; border: none; outline: none; font-size: 16px; color: var(--text); border-bottom: 1px solid var(--border); -webkit-appearance: none; }
+.srch select { padding: 13px 16px; border: none; outline: none; font-size: 16px; color: var(--muted); background: #fff; cursor: pointer; border-bottom: 1px solid var(--border); -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23607080' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+.srch-btn { background: var(--teal); color: #fff; border: none; padding: 15px 20px; font-size: 1rem; font-weight: 700; cursor: pointer; min-height: 52px; }
+.srch-btn:active { background: var(--teal-h); }
+
+/* ===== TICKER ===== */
+.ticker-sec { background: var(--navy); padding: 12px 0; overflow: hidden; border-top: 3px solid var(--teal); position: relative; }
+.tick-lbl { position: absolute; left: 0; top: 0; bottom: 0; background: var(--teal); color: #fff; display: flex; align-items: center; padding: 0 12px; font-size: .6rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; z-index: 2; white-space: nowrap; }
+.tick-lbl::after { content: ''; position: absolute; right: -10px; top: 0; bottom: 0; width: 10px; background: linear-gradient(to right, var(--teal), transparent); }
+.tick-wrap { margin-left: 90px; overflow: hidden; }
+.tick-track { display: flex; gap: 14px; animation: ticker 18s linear infinite; white-space: nowrap; }
+.tick-track:hover { animation-play-state: paused; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.tick-item { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 6px 11px; cursor: pointer; flex-shrink: 0; color: #fff; transition: background .2s; }
+.tick-item:active { background: rgba(13,138,126,.3); }
+.tick-dot { width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; flex-shrink: 0; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.tick-org { font-size: .66rem; color: rgba(255,255,255,.5); }
+.tick-t { font-size: .8rem; font-weight: 600; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.tick-m { font-size: .7rem; color: var(--teal); font-weight: 700; }
+.tick-b { font-size: .6rem; padding: 2px 6px; border-radius: 20px; background: rgba(13,138,126,.25); color: var(--teal); border: 1px solid rgba(13,138,126,.35); font-weight: 700; }
+
+/* ===== FOR WHO ===== */
+.for-who { background: var(--bg); padding: 52px 0; }
+.for-g { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+.for-c { border-radius: var(--r2); padding: 24px 20px; transition: transform .2s; }
+.for-c.org { background: var(--navy); }
+.for-c.con { background: #fff; border: 2px solid var(--border); }
+.for-tag { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; display: inline-block; padding: 3px 9px; border-radius: 20px; margin-bottom: 10px; }
+.for-c.org .for-tag { background: rgba(13,138,126,.3); color: var(--teal); }
+.for-c.con .for-tag { background: var(--teal-lite); color: var(--teal); }
+.for-emoji { font-size: 2rem; margin-bottom: 10px; display: block; }
+.for-c h2 { font-size: clamp(1.15rem, 4vw, 1.5rem); margin-bottom: 6px; font-weight: 700; }
+.for-c.org h2 { color: #fff; }
+.for-c.con h2 { color: var(--navy); }
+.for-desc { font-size: .88rem; line-height: 1.6; margin-bottom: 14px; }
+.for-c.org .for-desc { color: rgba(255,255,255,.65); }
+.for-c.con .for-desc { color: var(--muted); }
+.for-list { list-style: none; margin: 0 0 18px; display: flex; flex-direction: column; gap: 8px; }
+.for-list li { font-size: .87rem; display: flex; align-items: flex-start; gap: 9px; line-height: 1.5; }
+.for-list li::before { content: '✓'; font-weight: 900; flex-shrink: 0; color: var(--teal); margin-top: 1px; }
+.for-c.org .for-list li { color: rgba(255,255,255,.8); }
+.for-c.con .for-list li { color: var(--muted); }
+.for-cta { display: block; padding: 13px 16px; border-radius: 10px; font-size: .92rem; font-weight: 700; cursor: pointer; border: none; width: 100%; text-align: center; min-height: 50px; transition: all .2s; }
+.for-c.org .for-cta { background: var(--teal); color: #fff; }
+.for-c.con .for-cta { background: var(--navy); color: #fff; }
+
+/* ===== PROJECTS ===== */
+.sec-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+.prj-g { display: flex; flex-direction: column; gap: 14px; }
+.prj-c { background: #fff; border-radius: var(--r); border: 1px solid var(--border); padding: 16px; box-shadow: var(--sh1); cursor: pointer; transition: transform .2s; position: relative; overflow: hidden; }
+.prj-c:active { transform: scale(.99); }
+.prj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.prj-org-row { display: flex; align-items: center; gap: 8px; }
+.prj-org-logo { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; background: var(--bg); flex-shrink: 0; }
+.prj-org-nm { font-size: .78rem; font-weight: 700; color: var(--navy); }
+.prj-org-tp { font-size: .7rem; color: var(--muted); }
+.prj-live { background: #E8F5E9; color: #2E7D32; font-size: .6rem; padding: 3px 7px; border-radius: 20px; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+.prj-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; display: inline-block; }
+.prj-title { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.4; }
+.prj-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.prj-chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.chip { font-size: .68rem; padding: 4px 8px; border-radius: 20px; background: var(--bg); color: var(--navy); font-weight: 600; white-space: nowrap; }
+.prj-ft { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+.prj-budget { font-size: .97rem; font-weight: 800; color: var(--teal); }
+.prj-budget span { font-size: .7rem; color: var(--muted); font-weight: 400; }
+.prj-apply { background: var(--teal); color: #fff; border: none; padding: 9px 14px; border-radius: 8px; font-size: .8rem; font-weight: 700; cursor: pointer; white-space: nowrap; min-height: 40px; }
+
+/* ===== CONSULTANTS ===== */
+.con-g { display: flex; flex-direction: column; gap: 14px; }
+.con-c { background: #fff; border-radius: var(--r); padding: 18px 16px; box-shadow: var(--sh1); border: 1px solid var(--border); position: relative; overflow: hidden; }
+.bdgs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+.bdg { font-size: .6rem; font-weight: 800; padding: 3px 7px; border-radius: 20px; display: inline-flex; align-items: center; gap: 3px; }
+.bdg-v { background: #E8F5E9; color: #2E7D32; }
+.bdg-t { background: #FFF3E0; color: #E65100; }
+.con-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.av { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+.con-info { flex: 1; min-width: 0; }
+.con-nm { color: var(--navy); font-size: .95rem; font-weight: 700; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.con-rl { color: var(--muted); font-size: .74rem; margin-bottom: 4px; }
+.stars-row { display: flex; align-items: center; gap: 4px; }
+.stars { color: #FFA726; font-size: .8rem; }
+.rn { font-size: .8rem; font-weight: 800; }
+.rc { font-size: .7rem; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.stag { font-size: .67rem; padding: 3px 7px; background: var(--bg); color: var(--navy); border-radius: 20px; font-weight: 600; }
+.con-ft { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+.rate { font-size: .86rem; color: var(--navy); font-weight: 800; }
+.rate span { color: var(--muted); font-weight: 400; font-size: .7rem; }
+.avail { font-size: .68rem; color: #4CAF50; font-weight: 700; display: flex; align-items: center; gap: 3px; margin-top: 3px; }
+.avail::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; display: inline-block; }
+.avail.na { color: #E57373; }
+.avail.na::before { background: #E57373; }
+.btn-inv { background: var(--teal); color: #fff; border: none; padding: 8px 14px; border-radius: 7px; font-size: .78rem; font-weight: 700; cursor: pointer; min-height: 38px; }
+
+/* ===== SECTORS ===== */
+.sec-g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+.sec-c { background: #fff; border-radius: 10px; padding: 16px 8px; text-align: center; box-shadow: var(--sh1); cursor: pointer; border: 2px solid transparent; transition: border-color .2s; }
+.sec-c:active { border-color: var(--teal); }
+.sec-ico { font-size: 1.5rem; margin-bottom: 5px; }
+.sec-c h3 { font-size: .72rem; color: var(--navy); font-weight: 700; }
+
+/* ===== HOW IT WORKS ===== */
+.how-tabs { display: flex; justify-content: center; margin: 20px auto 28px; background: var(--bg); border-radius: 50px; padding: 4px; width: fit-content; max-width: 100%; }
+.how-tab { padding: 10px 18px; border: none; border-radius: 50px; font-size: .87rem; font-weight: 700; cursor: pointer; transition: all .2s; color: var(--muted); background: transparent; white-space: nowrap; min-height: 42px; }
+.how-tab.on { background: var(--navy); color: #fff; }
+.steps { display: flex; flex-direction: column; gap: 14px; }
+.step { display: flex; align-items: flex-start; gap: 14px; background: #fff; border-radius: var(--r); padding: 16px; box-shadow: var(--sh1); border: 1px solid var(--border); }
+.step-n { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--navy)); color: #fff; font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-body h3 { color: var(--navy); margin-bottom: 4px; font-size: .95rem; }
+.step-body p { color: var(--muted); font-size: .84rem; line-height: 1.6; }
+.how-pnl { animation: fadeUp .35s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* ===== VALUES ===== */
+.vals-g { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.val-c { background: #fff; border-radius: var(--r); padding: 20px 16px; box-shadow: var(--sh1); border-left: 4px solid var(--teal); }
+.val-ico { font-size: 1.5rem; margin-bottom: 8px; }
+.val-c h3 { color: var(--navy); margin-bottom: 4px; }
+.val-c p { color: var(--muted); font-size: .86rem; line-height: 1.65; }
+
+/* ===== AI ===== */
+.ai-sec { background: var(--navy-d); padding: 52px 0; }
+.ai-sec .lbl { color: var(--teal); }
+.ai-sec .stitle { color: #fff; }
+.ai-lay { display: flex; flex-direction: column; gap: 28px; }
+.ai-desc .ssub { color: rgba(255,255,255,.62); }
+.ai-feats { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.ai-feats li { color: rgba(255,255,255,.75); font-size: .86rem; line-height: 1.5; }
+.ai-w { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--r2); padding: 18px 16px; }
+.ai-mode-tog { display: flex; background: rgba(255,255,255,.07); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+.ai-mb { flex: 1; padding: 10px 8px; font-size: .82rem; font-weight: 700; border: none; cursor: pointer; background: transparent; color: rgba(255,255,255,.5); min-height: 42px; text-align: center; transition: all .2s; line-height: 1.3; }
+.ai-mb.on { background: var(--teal); color: #fff; }
+.ai-chat { min-height: 180px; max-height: 260px; overflow-y: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; }
+.ai-msg { padding: 10px 12px; border-radius: 10px; max-width: 88%; font-size: .86rem; line-height: 1.55; }
+.ai-msg.bot { background: rgba(13,138,126,.2); color: rgba(255,255,255,.9); align-self: flex-start; border: 1px solid rgba(13,138,126,.3); }
+.ai-msg.user { background: var(--teal); color: #fff; align-self: flex-end; }
+.ai-typing { color: rgba(255,255,255,.45); font-size: .8rem; font-style: italic; align-self: flex-start; }
+.ai-inp-row { display: flex; gap: 8px; }
+.ai-inp { flex: 1; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: #fff; padding: 12px 13px; border-radius: 10px; font-size: 16px; outline: none; -webkit-appearance: none; }
+.ai-inp::placeholder { color: rgba(255,255,255,.32); }
+.ai-inp:focus { border-color: var(--teal); }
+.ai-snd { background: var(--teal); color: #fff; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: .9rem; white-space: nowrap; min-height: 46px; min-width: 68px; }
+.ai-snd:disabled { opacity: .5; }
+.ai-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.ai-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 13px; transition: border-color .2s; }
+.ai-card:active { border-color: var(--teal); }
+.ai-cn { font-weight: 800; color: #fff; font-size: .87rem; margin-bottom: 2px; }
+.ai-cr { color: rgba(255,255,255,.52); font-size: .74rem; margin-bottom: 6px; }
+
+/* ===== STATS ===== */
+.stat-g { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+.stat-c { text-align: center; padding: 18px 12px; background: #fff; border-radius: var(--r); box-shadow: var(--sh1); }
+.stat-n { font-size: clamp(1.8rem, 7vw, 2.8rem); font-weight: 900; color: var(--navy); line-height: 1; margin-bottom: 5px; }
+.stat-n .teal { color: var(--teal); }
+.stat-l { color: var(--muted); font-size: .82rem; }
+
+/* ===== TESTIMONIALS ===== */
+.test-g { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+.test-c { background: #fff; border-radius: var(--r); padding: 20px 16px; box-shadow: var(--sh1); border: 1px solid var(--border); }
+.test-who { font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+.test-who.org { background: #E3F2FD; color: #1565C0; }
+.test-who.con { background: #E8F5E9; color: #2E7D32; }
+.test-q { font-size: 1.8rem; color: var(--teal); line-height: 1; margin-bottom: 6px; }
+.test-t { color: var(--text); font-size: .87rem; line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+.test-au { display: flex; align-items: center; gap: 10px; }
+.test-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: .82rem; flex-shrink: 0; }
+.test-nm { font-weight: 700; font-size: .87rem; color: var(--navy); }
+.test-or { font-size: .72rem; color: var(--muted); }
+
+/* ===== CTA SPLIT ===== */
+.cta-split { padding: 52px 0; background: var(--bg); }
+.cta-g { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+.cta-c { border-radius: var(--r2); padding: 28px 20px; text-align: center; }
+.cta-c.navy { background: var(--navy); }
+.cta-c.teal { background: linear-gradient(135deg, var(--teal), var(--teal-h)); }
+.cta-c h2 { color: #fff; margin-bottom: 8px; font-size: clamp(1.2rem, 4vw, 1.5rem); }
+.cta-c p { color: rgba(255,255,255,.72); font-size: .9rem; margin-bottom: 20px; line-height: 1.6; }
+.cta-btn { display: inline-block; padding: 13px 22px; border-radius: 10px; font-size: .93rem; font-weight: 700; cursor: pointer; border: 2px solid rgba(255,255,255,.4); background: rgba(255,255,255,.15); color: #fff; min-height: 50px; transition: all .2s; }
+.cta-c.teal .cta-btn { background: #fff; color: var(--teal); border-color: #fff; }
+
+/* ===== FOOTER ===== */
+.foot { background: var(--navy-d); color: rgba(255,255,255,.65); padding: 44px 0 max(24px, env(safe-area-inset-bottom, 24px)); }
+.foot-g { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+.foot-brand { grid-column: 1 / -1; margin-bottom: 4px; }
+.foot-brand .logo { display: inline-block; margin-bottom: 10px; }
+.foot-brand p { font-size: .84rem; line-height: 1.7; max-width: 340px; }
+.foot-soc { margin-top: 10px; }
+.foot-soc a { color: rgba(255,255,255,.45); text-decoration: none; margin-right: 12px; font-size: .82rem; }
+.foot-col h4 { color: #fff; font-size: .86rem; font-weight: 800; margin-bottom: 11px; }
+.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.foot-col ul li a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .82rem; cursor: pointer; display: block; padding: 2px 0; transition: color .2s; }
+.foot-col ul li a:hover { color: var(--teal); }
+.foot-b { border-top: 1px solid rgba(255,255,255,.08); padding-top: 18px; font-size: .74rem; display: flex; flex-direction: column; gap: 6px; }
+.foot-b a { color: rgba(255,255,255,.3); text-decoration: none; margin-right: 12px; }
+.adm-lnk { color: rgba(255,255,255,.2) !important; font-size: .72rem; }
+
+/* ===== MODALS ===== */
+.ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 3000; align-items: flex-end; justify-content: center; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.ov.on { display: flex; }
+.mo { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 100%; max-height: 92svh; overflow-y: auto; -webkit-overflow-scrolling: touch; box-shadow: var(--sh3); animation: moUp .3s ease; padding-bottom: max(8px, env(safe-area-inset-bottom, 8px)); }
+@keyframes moUp { from { transform: translateY(50px); opacity: 0; } to { transform: none; opacity: 1; } }
+.mo-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 10px auto 0; }
+.mo-h { padding: 14px 18px 0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 10; border-bottom: 1px solid var(--border); padding-bottom: 13px; }
+.mo-h h2 { font-size: 1.1rem; color: var(--navy); font-weight: 700; }
+.mo-x { background: var(--bg); border: none; font-size: .9rem; cursor: pointer; color: var(--muted); padding: 0; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.mo-b { padding: 16px 18px 4px; }
+.tabs2 { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tab2 { padding: 9px 14px; background: none; border: none; font-size: .85rem; color: var(--muted); cursor: pointer; font-weight: 700; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; min-height: 40px; transition: color .2s; }
+.tab2.on { color: var(--teal); border-bottom-color: var(--teal); }
+.fg { margin-bottom: 14px; }
+.fg label { display: block; font-size: .82rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.fg input, .fg select, .fg textarea { width: 100%; padding: 13px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 16px; outline: none; color: var(--text); background: #fff; font-family: inherit; -webkit-appearance: none; appearance: none; transition: border-color .2s; }
+.fg select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23607080' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-color: #fff; padding-right: 34px; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--teal); }
+.fr { display: grid; grid-template-columns: 1fr; gap: 0; }
+.btn-f { width: 100%; padding: 14px; font-size: .97rem; font-weight: 800; border-radius: 10px; border: none; cursor: pointer; min-height: 52px; transition: opacity .2s; }
+.btn-f:active { opacity: .85; }
+.mo-foot { text-align: center; margin-top: 14px; font-size: .84rem; color: var(--muted); padding-bottom: 6px; }
+.mo-foot a { color: var(--teal); text-decoration: none; font-weight: 700; cursor: pointer; }
+.chk-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+.chk-row input[type=checkbox] { width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; cursor: pointer; accent-color: var(--teal); }
+.chk-row label { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+.chk-row label a { color: var(--teal); }
+.adm-bdg { display: inline-block; background: var(--navy); color: var(--teal); font-size: .6rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 6px; }
+.adm-stat-g { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.adm-stat { background: var(--bg); border-radius: 10px; padding: 12px; text-align: center; }
+.adm-stat-n { font-size: 1.4rem; font-weight: 900; color: var(--navy); }
+.adm-stat-l { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+.adm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.adm-t { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 480px; }
+table.adm-t th { padding: 8px 10px; text-align: left; color: var(--navy); background: var(--bg); font-weight: 700; white-space: nowrap; }
+table.adm-t td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.adm-a { font-size: .7rem; padding: 5px 10px; border-radius: 6px; border: none; cursor: pointer; font-weight: 700; min-height: 30px; }
+.adm-ok { background: #E8F5E9; color: #2E7D32; }
+.adm-no { background: #FFEBEE; color: #C62828; }
+.pd-hd { background: var(--navy); color: #fff; padding: 18px; border-radius: var(--r) var(--r) 0 0; margin: -16px -18px 14px; }
+.pd-hd h2 { color: #fff; font-size: .97rem; margin-bottom: 5px; line-height: 1.4; }
+.pd-org { color: rgba(255,255,255,.65); font-size: .8rem; }
+.pd-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.pd-tag { background: rgba(255,255,255,.15); color: #fff; padding: 3px 8px; border-radius: 20px; font-size: .68rem; }
+.pd-g { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.pd-item label { display: block; font-size: .67rem; color: var(--muted); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+.pd-item span { font-size: .86rem; font-weight: 700; color: var(--text); }
+.pd-desc { font-size: .86rem; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+.pd-btns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+.pay-sum { background: var(--bg); border-radius: 10px; padding: 13px; margin-bottom: 14px; }
+.pay-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: .84rem; }
+.pay-total { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; }
+.pay-qr { width: 110px; height: 110px; background: var(--bg); border-radius: 10px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; border: 2px dashed var(--border); }
+.upi-id { background: var(--bg); border-radius: 8px; padding: 9px; font-weight: 800; color: var(--navy); font-size: .9rem; text-align: center; word-break: break-all; }
+.bank-det { background: var(--bg); border-radius: 10px; padding: 13px; font-size: .83rem; line-height: 2; }
+
+/* Toast */
+#toast { position: fixed; bottom: max(24px, env(safe-area-inset-bottom, 24px)); left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: .85rem; font-weight: 700; z-index: 4000; transition: transform .35s ease; box-shadow: var(--sh3); max-width: calc(100vw - 32px); text-align: center; white-space: nowrap; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+.sc-top { position: fixed; bottom: max(20px, env(safe-area-inset-bottom, 20px)); right: max(16px, env(safe-area-inset-right, 16px)); background: var(--teal); color: #fff; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; z-index: 500; opacity: 0; transform: translateY(10px); transition: all .3s; display: flex; align-items: center; justify-content: center; }
+.sc-top.vis { opacity: 1; transform: none; }
+
+/* ===== TABLET ≥ 600px ===== */
+@media (min-width: 600px) {
+  canvas.ptc { display: block; }
+  .for-g { flex-direction: row; }
+  .for-c { flex: 1; }
+  .prj-g { display: grid; grid-template-columns: 1fr 1fr; }
+  .con-g { display: grid; grid-template-columns: 1fr 1fr; }
+  .vals-g { display: grid; grid-template-columns: 1fr 1fr; }
+  .test-g { display: grid; grid-template-columns: 1fr 1fr; }
+  .cta-g { flex-direction: row; }
+  .cta-c { flex: 1; }
+  .fr { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ai-cards { display: grid; grid-template-columns: 1fr 1fr; }
+  .steps { display: grid; grid-template-columns: 1fr 1fr; }
+  .srch { flex-direction: row; }
+  .srch input { border-bottom: none; }
+  .srch select { border-bottom: none; border-left: 1px solid var(--border); }
+  .pd-btns { flex-direction: row; }
+  .sec { padding: 68px 0; }
+  .for-who, .cta-split { padding: 68px 0; }
+  .ai-sec { padding: 68px 0; }
+}
+
+/* ===== DESKTOP ≥ 900px ===== */
+@media (min-width: 900px) {
+  .nav-in { height: 66px; }
+  .nav-links { display: flex; list-style: none; gap: 20px; flex: 1; padding: 0 20px; }
+  .nav-links a { color: rgba(255,255,255,.82); text-decoration: none; font-size: .86rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
+  .nav-links a:hover { color: #fff; }
+  .nav-desk-acts { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .hbg { display: none; }
+  .prj-g { grid-template-columns: repeat(3, 1fr); }
+  .con-g { grid-template-columns: repeat(3, 1fr); }
+  .vals-g { grid-template-columns: repeat(4, 1fr); }
+  .stat-g { grid-template-columns: repeat(4, 1fr); }
+  .test-g { grid-template-columns: repeat(4, 1fr); }
+  .sec-g { grid-template-columns: repeat(4, 1fr); }
+  .steps { grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .step { flex-direction: column; text-align: center; align-items: center; background: transparent; border: none; box-shadow: none; padding: 0 12px; }
+  .step-n { margin-bottom: 12px; }
+  .ai-lay { flex-direction: row; gap: 56px; }
+  .ai-desc { flex: 1; }
+  .ai-w { flex: 1.1; }
+  .ai-cards { grid-template-columns: repeat(3, 1fr); }
+  .foot-g { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .foot-brand { grid-column: auto; }
+  .foot-b { flex-direction: row; align-items: center; }
+  .ov { align-items: center; padding: 16px; }
+  .mo { border-radius: var(--r2); max-width: 500px; max-height: 90vh; }
+  .mo.mo-w { max-width: 680px; }
+  .mo-handle { display: none; }
+  .mo-h { position: static; border-bottom: none; padding-bottom: 0; }
+  .mo-b { padding: 20px 24px; }
+  .pd-btns { flex-direction: row; }
+  .sec { padding: 80px 0; }
+  .for-who, .cta-split { padding: 80px 0; }
+  .ai-sec { padding: 80px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo" onclick="scrollTo({top:0,behavior:'smooth'})"><span class="f">F</span><span class="ic">IC</span></div>
+    <ul class="nav-links">
+      <li><a href="#projects">Find Projects</a></li>
+      <li><a href="#consultants">Find Consultants</a></li>
+      <li><a href="#sectors">Sectors</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#ai">AI Match</a></li>
+    </ul>
+    <div class="nav-desk-acts">
+      <button class="btn-si" onclick="openM('loginMo')">Sign In</button>
+      <button class="btn-p" onclick="openM('regMo')">Join Free</button>
+    </div>
+    <button class="hbg" onclick="openDrawer()" id="hbgBtn" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-top">
+    <div class="logo"><span class="f">F</span><span class="ic">IC</span></div>
+    <button class="nav-drawer-close" onclick="closeDrawer()" aria-label="Close">✕</button>
+  </div>
+  <ul class="nav-drawer-links">
+    <li><a href="#projects" onclick="closeDrawer()">📋 Find Projects</a></li>
+    <li><a href="#consultants" onclick="closeDrawer()">👤 Find Consultants</a></li>
+    <li><a href="#sectors" onclick="closeDrawer()">🏷 Sectors</a></li>
+    <li><a href="#how" onclick="closeDrawer()">⚙️ How It Works</a></li>
+    <li><a href="#ai" onclick="closeDrawer()">🤖 AI Matching</a></li>
+  </ul>
+  <div class="nav-drawer-btns">
+    <button class="btn-si" onclick="closeDrawer();openM('loginMo')">Sign In</button>
+    <button class="btn-p" onclick="closeDrawer();openM('regMo')">Join Free — It's Free</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <canvas class="ptc" id="ptcCanvas"></canvas>
+  <div class="hero-c container">
+    <span class="hero-ey">Freelance Impact Consultants</span>
+    <h1>Connect.Collaborate<span class="hl" id="hTagline">Create Impact.</span></h1>
+    <p class="hero-sub" id="hSub">India's marketplace connecting freelance consultants with mission-driven organizations across Health, Education, Climate, Livelihoods, and more.</p>
+    <div class="aud-tog">
+      <button class="aud-btn on" id="audOrg" onclick="setAud('org')">🏢 Hiring a Consultant</button>
+      <button class="aud-btn" id="audCon" onclick="setAud('con')">👤 Finding Projects</button>
+    </div>
+    <div class="hero-ctas">
+      <button class="bh1" id="hCta1">Find a Consultant</button>
+      <button class="bh2" id="hCta2">Post a Project</button>
+    </div>
+    <div class="srch-wrap">
+      <div class="srch">
+        <input type="text" id="srchIn" placeholder="Search by skill, domain, keyword..." autocomplete="off" autocorrect="off" spellcheck="false">
+        <select id="srchSec">
+          <option>All Sectors</option>
+          <option>Health</option><option>Education</option><option>Agriculture</option>
+          <option>Climate Change</option><option>Financial Inclusion</option><option>MSME</option>
+          <option>Livelihoods</option><option>ESG</option><option>IT / AI</option>
+          <option>Skills & Jobs</option><option>Eco-Tourism</option><option>Strategy</option>
+        </select>
+        <button class="srch-btn" id="srchBtn">Search</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-sec">
+  <div class="tick-lbl">🔴 LIVE</div>
+  <div class="tick-wrap"><div class="tick-track" id="tickTrack"></div></div>
+</div>
+
+<!-- FOR WHO -->
+<section class="for-who">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Two Sides, One Platform</span><h2 class="stitle">FIC Works for You</h2><p class="ssub tc">Whether you're hiring talent or finding your next project.</p></div>
+    <div class="for-g">
+      <div class="for-c org reveal">
+        <span class="for-tag">For Organizations</span>
+        <span class="for-emoji">🏢</span>
+        <h2>Need an Expert Consultant?</h2>
+        <p class="for-desc">Find vetted, sector-specific consultants for any engagement size.</p>
+        <ul class="for-list">
+          <li>Search 1,200+ verified consultants</li>
+          <li>AI-powered matchmaking in seconds</li>
+          <li>Post projects & manage RFPs</li>
+          <li>Milestone contracts & escrow payments</li>
+        </ul>
+        <button class="for-cta" onclick="openM('regMo');switchReg('organization')">Register Your Organization →</button>
+      </div>
+      <div class="for-c con reveal">
+        <span class="for-tag">For Consultants</span>
+        <span class="for-emoji">👤</span>
+        <h2>Looking for Your Next Project?</h2>
+        <p class="for-desc">Discover short-term impact consulting work that fits your expertise.</p>
+        <ul class="for-list">
+          <li>Browse live RFPs across 12 sectors</li>
+          <li>Get AI-matched to projects that fit</li>
+          <li>Collaborate with other consultants</li>
+          <li>Get paid securely via escrow</li>
+        </ul>
+        <button class="for-cta" onclick="openM('regMo');switchReg('consultant')">Create Consultant Profile →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE PROJECTS -->
+<section class="sec" id="projects">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div><span class="lbl">For Consultants</span><h2 class="stitle">Live Projects — Apply Now</h2><p class="ssub">Short-term engagements across India's development sector.</p></div>
+      <button class="btn-p" onclick="openM('loginMo')">Browse All →</button>
+    </div>
+    <div class="prj-g" id="prjGrid"></div>
+  </div>
+</section>
+
+<!-- TOP CONSULTANTS -->
+<section class="sec" id="consultants" style="background:var(--bg)">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div><span class="lbl">For Organizations</span><h2 class="stitle">Top Impact Consultants</h2><p class="ssub">Vetted experts ready for your next engagement.</p></div>
+      <button class="btn-p" onclick="openM('loginMo')">View All →</button>
+    </div>
+    <div class="con-g" id="conGrid"></div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section class="sec" id="sectors">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Coverage</span><h2 class="stitle">12 Impact Sectors</h2><p class="ssub tc">Find projects or consultants across India's development ecosystem.</p></div>
+    <div class="sec-g" id="secGrid"></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how" style="background:var(--bg)">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Simple Process</span><h2 class="stitle">How FIC Works</h2></div>
+    <div class="how-tabs reveal">
+      <button class="how-tab on" onclick="switchHow('org',this)">🏢 For Organizations</button>
+      <button class="how-tab" onclick="switchHow('con',this)">👤 For Consultants</button>
+    </div>
+    <div id="howOrg" class="how-pnl">
+      <div class="steps">
+        <div class="step reveal"><div class="step-n">1</div><div class="step-body"><h3>Register & Verify</h3><p>Create your organization profile with sector focus and GST details in minutes.</p></div></div>
+        <div class="step reveal"><div class="step-n">2</div><div class="step-body"><h3>Post a Project</h3><p>Describe scope, timeline, and budget. Post privately or publicly on FIC.</p></div></div>
+        <div class="step reveal"><div class="step-n">3</div><div class="step-body"><h3>Match & Shortlist</h3><p>AI surfaces the best-fit consultants. Compare and invite your shortlist.</p></div></div>
+        <div class="step reveal"><div class="step-n">4</div><div class="step-body"><h3>Contract & Pay</h3><p>Digital contracts, milestone tracking, and secure escrow payments.</p></div></div>
+      </div>
+    </div>
+    <div id="howCon" class="how-pnl" style="display:none">
+      <div class="steps">
+        <div class="step reveal"><div class="step-n">1</div><div class="step-body"><h3>Build Your Profile</h3><p>Showcase your sectors, skills, per diem rate, and availability.</p></div></div>
+        <div class="step reveal"><div class="step-n">2</div><div class="step-body"><h3>Browse & Apply</h3><p>Discover live projects filtered by sector, location, and budget.</p></div></div>
+        <div class="step reveal"><div class="step-n">3</div><div class="step-body"><h3>Interview & Win</h3><p>Chat or video call with organizations. Share your CV in one tap.</p></div></div>
+        <div class="step reveal"><div class="step-n">4</div><div class="step-body"><h3>Deliver & Get Paid</h3><p>Complete milestones and receive secure UPI or bank payments.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="sec">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Why FIC</span><h2 class="stitle">The Impact Consulting Advantage</h2></div>
+    <div class="vals-g">
+      <div class="val-c reveal"><div class="val-ico">💡</div><h3>Instant Discovery</h3><p>Find the right consultant or project in minutes using AI-powered search.</p></div>
+      <div class="val-c reveal"><div class="val-ico">✅</div><h3>Perfect Matching</h3><p>Framework-driven compatibility scoring across sector, skills, and experience.</p></div>
+      <div class="val-c reveal"><div class="val-ico">⭐</div><h3>Quality Outcomes</h3><p>Milestone contracts and mutual rating systems ensure exceptional results.</p></div>
+      <div class="val-c reveal"><div class="val-ico">🔒</div><h3>Verified & Trusted</h3><p>All consultants are GST and identity verified before appearing on the platform.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section class="ai-sec" id="ai">
+  <div class="container">
+    <div class="ai-lay">
+      <div class="ai-desc reveal">
+        <span class="lbl">Powered by AI</span>
+        <h2 class="stitle">AI That Works for Both Sides</h2>
+        <p class="ssub">Describe your need in plain language — our AI surfaces the best matches instantly.</p>
+        <ul class="ai-feats">
+          <li>🏢 <strong style="color:#fff">Orgs:</strong> describe your project → get matched consultants</li>
+          <li>👤 <strong style="color:#fff">Consultants:</strong> describe your skills → get matched projects</li>
+          <li>✅ Sector, experience & budget scoring</li>
+          <li>✅ Language, location & availability matching</li>
+        </ul>
+      </div>
+      <div class="ai-w reveal">
+        <div class="ai-mode-tog">
+          <button class="ai-mb on" id="aiMOrg" onclick="setAIMode('org')">🏢 Find Consultant</button>
+          <button class="ai-mb" id="aiMCon" onclick="setAIMode('con')">👤 Find Project</button>
+        </div>
+        <div class="ai-chat" id="aiChat">
+          <div class="ai-msg bot">👋 Hi! Tell me about your project or consulting background — I'll find your best matches right now.</div>
+        </div>
+        <div class="ai-inp-row">
+          <input class="ai-inp" id="aiInp" placeholder="Describe your project or your expertise..." onkeydown="if(event.key==='Enter')sendAI()" autocomplete="off" autocorrect="off">
+          <button class="ai-snd" id="aiSnd" onclick="sendAI()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="sec" id="stats" style="background:var(--bg)">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Platform Impact</span><h2 class="stitle">A Growing Two-Sided Marketplace</h2></div>
+    <div class="stat-g">
+      <div class="stat-c reveal"><div class="stat-n"><span id="c1" class="teal">0</span>+</div><div class="stat-l">Verified Consultants</div></div>
+      <div class="stat-c reveal"><div class="stat-n"><span id="c2" class="teal">0</span>+</div><div class="stat-l">Live Projects</div></div>
+      <div class="stat-c reveal"><div class="stat-n"><span id="c3" class="teal">0</span>+</div><div class="stat-l">Successful Matches</div></div>
+      <div class="stat-c reveal"><div class="stat-n">₹<span id="c4" class="teal">0</span>Cr+</div><div class="stat-l">Consultant Earnings</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="stories">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Success Stories</span><h2 class="stitle">Heard from Both Sides</h2></div>
+    <div class="test-g" id="testGrid"></div>
+  </div>
+</section>
+
+<!-- CTA SPLIT -->
+<section class="cta-split">
+  <div class="container">
+    <div class="tc reveal"><span class="lbl">Get Started Today</span><h2 class="stitle">Join the Impact Economy</h2></div>
+    <div class="cta-g">
+      <div class="cta-c navy reveal">
+        <span style="font-size:2rem;display:block;margin-bottom:10px">🏢</span>
+        <h2>For Organizations</h2>
+        <p>Post your first project free. Access India's largest network of vetted impact consultants.</p>
+        <button class="cta-btn" onclick="openM('regMo');switchReg('organization')">Register Organization →</button>
+      </div>
+      <div class="cta-c teal reveal">
+        <span style="font-size:2rem;display:block;margin-bottom:10px">👤</span>
+        <h2>For Consultants</h2>
+        <p>Free profile. Start receiving matched project opportunities from Day 1.</p>
+        <button class="cta-btn" onclick="openM('regMo');switchReg('consultant')">Create My Profile →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="container">
+    <div class="foot-g">
+      <div class="foot-brand">
+        <div class="logo"><span class="f">F</span><span class="ic">IC</span></div>
+        <p>India's first end-to-end marketplace for freelance impact consulting. Connecting talent with purpose.</p>
+        <div class="foot-soc"><a href="#">LinkedIn</a><a href="#">Twitter</a><a href="#">WhatsApp</a></div>
+      </div>
+      <div class="foot-col">
+        <h4>For Consultants</h4>
+        <ul><li><a onclick="openM('regMo');switchReg('consultant')">Create Profile</a></li><li><a href="#projects">Browse Projects</a></li><li><a href="#">Job Alerts</a></li><li><a href="#">Collaborate</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>For Organizations</h4>
+        <ul><li><a href="#consultants">Find Consultants</a></li><li><a onclick="openM('postPrjMo')">Post a Project</a></li><li><a href="#">RFP Management</a></li><li><a onclick="openM('payMo')">Payments</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul><li><a href="#">About FIC</a></li><li><a href="#">Blog</a></li><li><a href="#stories">Success Stories</a></li><li><a class="adm-lnk" onclick="openM('admMo')">Platform Admin</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-b">
+      <p>© 2026 Freelance Impact Consultants. All rights reserved.</p>
+      <div><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    </div>
+  </div>
+</footer>
+
+<button class="sc-top" id="scTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div id="toast"></div>
+
+<!-- MODALS -->
+<div class="ov" id="loginMo" onclick="if(event.target===this)closeM('loginMo')">
+  <div class="mo"><div class="mo-handle"></div><div class="mo-h"><h2>Sign In to FIC</h2><button class="mo-x" onclick="closeM('loginMo')">✕</button></div>
+  <div class="mo-b"><div class="tabs2"><button class="tab2 on" onclick="swTab(this)">Consultant</button><button class="tab2" onclick="swTab(this)">Organization</button></div>
+  <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com" autocomplete="email" inputmode="email"></div>
+  <div class="fg"><label>Password</label><input type="password" placeholder="Enter password" autocomplete="current-password"></div>
+  <div style="text-align:right;margin-bottom:14px"><a style="font-size:.82rem;color:var(--teal);cursor:pointer">Forgot password?</a></div>
+  <button class="btn-p btn-f" onclick="handleLogin()">Sign In</button>
+  <div class="mo-foot">No account? <a onclick="closeM('loginMo');openM('regMo')">Join free</a></div>
+  </div></div>
+</div>
+
+<div class="ov" id="regMo" onclick="if(event.target===this)closeM('regMo')">
+  <div class="mo mo-w"><div class="mo-handle"></div><div class="mo-h"><h2>Join FIC</h2><button class="mo-x" onclick="closeM('regMo')">✕</button></div>
+  <div class="mo-b">
+    <div class="tabs2"><button class="tab2 on" onclick="switchReg('consultant');swTab(this)">👤 Consultant</button><button class="tab2" onclick="switchReg('organization');swTab(this)">🏢 Organization</button></div>
+    <div id="fCon">
+      <div class="fr"><div class="fg"><label>First Name</label><input type="text" placeholder="Arjun" autocomplete="given-name"></div><div class="fg"><label>Last Name</label><input type="text" placeholder="Mehta" autocomplete="family-name"></div></div>
+      <div class="fr"><div class="fg"><label>Email</label><input type="email" placeholder="arjun@email.com" autocomplete="email" inputmode="email"></div><div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel"></div></div>
+      <div class="fr"><div class="fg"><label>Primary Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>Financial Inclusion</option><option>MSME</option><option>Livelihoods</option><option>ESG</option><option>IT / AI</option></select></div><div class="fg"><label>Experience</label><select><option>1–3 years</option><option>4–7 years</option><option>8–12 years</option><option>13+ years</option></select></div></div>
+      <div class="fr"><div class="fg"><label>Per Diem (₹/day)</label><input type="text" placeholder="e.g. 8500" inputmode="numeric"></div><div class="fg"><label>LinkedIn URL</label><input type="url" placeholder="linkedin.com/in/..." autocomplete="url"></div></div>
+      <div class="fg"><label>GST Number (optional)</label><input type="text" placeholder="27ABCDE1234F1Z5"></div>
+      <div class="fg"><label>Password</label><input type="password" placeholder="Create a strong password" autocomplete="new-password"></div>
+      <div class="chk-row"><input type="checkbox"><label>I agree to the <a>Privacy Policy</a> and <a>Terms of Service</a></label></div>
+      <button class="btn-p btn-f" onclick="handleReg('consultant')">Create Profile — It's Free</button>
+    </div>
+    <div id="fOrg" style="display:none">
+      <div class="fr"><div class="fg"><label>Organization Name</label><input type="text" placeholder="Org Name"></div><div class="fg"><label>Type</label><select><option>NGO / Foundation</option><option>CSR / Corporate</option><option>Government / Multilateral</option><option>MSME / Startup</option></select></div></div>
+      <div class="fr"><div class="fg"><label>Contact Person</label><input type="text" placeholder="SPOC name"></div><div class="fg"><label>Designation</label><input type="text" placeholder="Program Manager"></div></div>
+      <div class="fr"><div class="fg"><label>Email</label><input type="email" placeholder="contact@org.com" autocomplete="email" inputmode="email"></div><div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel"></div></div>
+      <div class="fr"><div class="fg"><label>Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>MSME</option><option>Livelihoods</option></select></div><div class="fg"><label>GST Number</label><input type="text" placeholder="For billing"></div></div>
+      <div class="fg"><label>Password</label><input type="password" placeholder="Create a strong password" autocomplete="new-password"></div>
+      <div class="chk-row"><input type="checkbox"><label>I agree to the <a>Privacy Policy</a> and <a>Terms of Service</a></label></div>
+      <button class="btn-p btn-f" onclick="handleReg('organization')">Register — Free</button>
+    </div>
+    <div class="mo-foot">Already a member? <a onclick="closeM('regMo');openM('loginMo')">Sign in</a></div>
+  </div></div>
+</div>
+
+<div class="ov" id="admMo" onclick="if(event.target===this)closeM('admMo')">
+  <div class="mo"><div class="mo-handle"></div><div class="mo-h"><h2>Admin <span class="adm-bdg">ADMIN</span></h2><button class="mo-x" onclick="closeM('admMo')">✕</button></div>
+  <div class="mo-b">
+    <div style="background:var(--bg);border-radius:8px;padding:11px;margin-bottom:14px;font-size:.82rem;color:var(--muted)">🔒 Restricted to authorized FIC administrators only.</div>
+    <div class="fg"><label>Admin Email</label><input type="email" value="admin@fic.in" autocomplete="email" inputmode="email"></div>
+    <div class="fg"><label>Password</label><input type="password" value="admin123" autocomplete="current-password"></div>
+    <div class="fg"><label>Access Level</label><select><option>Super Admin</option><option>Operations Admin</option><option>Finance Admin</option></select></div>
+    <button class="btn-p btn-f" onclick="handleAdmin()">Access Dashboard</button>
+  </div></div>
+</div>
+
+<div class="ov" id="admDashMo" onclick="if(event.target===this)closeM('admDashMo')">
+  <div class="mo mo-w" style="max-width:900px"><div class="mo-handle"></div>
+    <div class="mo-h" style="background:var(--navy);margin:-14px -18px 0;border-radius:20px 20px 0 0;padding:16px 18px">
+      <h2 style="color:#fff;font-size:.97rem">FIC Admin Dashboard <span class="adm-bdg">SUPER ADMIN</span></h2>
+      <button class="mo-x" style="background:rgba(255,255,255,.15);color:#fff" onclick="closeM('admDashMo')">✕</button>
+    </div>
+    <div class="mo-b" style="padding-top:16px">
+      <div class="adm-stat-g">
+        <div class="adm-stat"><div class="adm-stat-n" style="color:var(--navy)">1,247</div><div class="adm-stat-l">Consultants</div></div>
+        <div class="adm-stat"><div class="adm-stat-n" style="color:var(--teal)">389</div><div class="adm-stat-l">Organizations</div></div>
+        <div class="adm-stat"><div class="adm-stat-n" style="color:#E65100">47</div><div class="adm-stat-l">Pending</div></div>
+        <div class="adm-stat"><div class="adm-stat-n" style="color:#2E7D32">₹4.2Cr</div><div class="adm-stat-l">Revenue</div></div>
+      </div>
+      <div class="tabs2"><button class="tab2 on" onclick="swAdm('ver',this)">Pending (47)</button><button class="tab2" onclick="swAdm('all',this)">Consultants</button><button class="tab2" onclick="swAdm('orgs',this)">Orgs</button><button class="tab2" onclick="swAdm('dis',this)">Disputes</button></div>
+      <div id="dVer"><div class="adm-scroll"><table class="adm-t"><thead><tr><th>Name</th><th>Type</th><th>Sector</th><th>Date</th><th>Action</th></tr></thead><tbody id="admTB"></tbody></table></div></div>
+      <div id="dAll" style="display:none"><p style="color:var(--muted);font-size:.86rem;padding:8px 0">1,247 consultants across all sectors.</p></div>
+      <div id="dOrgs" style="display:none"><p style="color:var(--muted);font-size:.86rem;padding:8px 0">389 organizations — NGOs (172), CSR (89), Government (74), Multilateral (54).</p></div>
+      <div id="dDis" style="display:none"><p style="color:var(--muted);font-size:.86rem;padding:8px 0">3 active disputes. Priority: Payment hold on Project #1134.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="prjMo" onclick="if(event.target===this)closeM('prjMo')">
+  <div class="mo mo-w"><div class="mo-handle"></div><div class="mo-h"><h2>Project Details</h2><button class="mo-x" onclick="closeM('prjMo')">✕</button></div>
+  <div class="mo-b" id="prjMoB"></div></div>
+</div>
+
+<div class="ov" id="postPrjMo" onclick="if(event.target===this)closeM('postPrjMo')">
+  <div class="mo mo-w"><div class="mo-handle"></div><div class="mo-h"><h2>Post a Project / RFP</h2><button class="mo-x" onclick="closeM('postPrjMo')">✕</button></div>
+  <div class="mo-b">
+    <div class="fg"><label>Project Title</label><input type="text" placeholder="e.g. Baseline Survey for WASH Program in Rajasthan"></div>
+    <div class="fr"><div class="fg"><label>Sector</label><select><option>Health</option><option>Education</option><option>Agriculture</option><option>Climate Change</option><option>Financial Inclusion</option><option>MSME</option><option>Livelihoods</option><option>ESG</option></select></div><div class="fg"><label>Org Type</label><select><option>NGO / Foundation</option><option>CSR / Corporate</option><option>Government</option><option>MSME / Startup</option></select></div></div>
+    <div class="fg"><label>Scope of Work</label><textarea rows="3" placeholder="Describe project scope, objectives, and deliverables..."></textarea></div>
+    <div class="fr"><div class="fg"><label>Budget Range</label><select><option>Under ₹1L</option><option>₹1L–₹3L</option><option>₹3L–₹7L</option><option>₹7L–₹15L</option><option>Above ₹15L</option></select></div><div class="fg"><label>Duration</label><select><option>Under 1 month</option><option>1–2 months</option><option>3–4 months</option><option>5–6 months</option><option>6–12 months</option></select></div></div>
+    <div class="fr"><div class="fg"><label>Location</label><input type="text" placeholder="e.g. Bihar or Remote / Pan-India"></div><div class="fg"><label>Posting Type</label><select><option>FIC Only (Private)</option><option>Public Posting</option></select></div></div>
+    <div class="chk-row"><input type="checkbox"><label>Include NDA requirement</label></div>
+    <button class="btn-p btn-f" onclick="handlePostPrj()">Post Project</button>
+    <button style="width:100%;padding:13px;border:2px solid var(--border);border-radius:10px;font-weight:700;cursor:pointer;color:var(--muted);background:none;margin-top:8px;font-size:.93rem;min-height:48px" onclick="closeM('postPrjMo')">Cancel</button>
+  </div></div>
+</div>
+
+<div class="ov" id="payMo" onclick="if(event.target===this)closeM('payMo')">
+  <div class="mo"><div class="mo-handle"></div><div class="mo-h"><h2>Make Payment</h2><button class="mo-x" onclick="closeM('payMo')">✕</button></div>
+  <div class="mo-b">
+    <div class="pay-sum">
+      <div class="pay-row"><span style="color:var(--muted)">Milestone 1 – Inception Report</span><strong>₹85,000</strong></div>
+      <div class="pay-row"><span style="color:var(--muted)">Platform Fee (8%)</span><span style="color:var(--muted)">₹6,800</span></div>
+      <div class="pay-total"><span>Total</span><span style="color:var(--teal);font-size:1.1rem">₹91,800</span></div>
+    </div>
+    <div class="tabs2"><button class="tab2 on" onclick="swPay('upi',this)">UPI</button><button class="tab2" onclick="swPay('card',this)">Card</button><button class="tab2" onclick="swPay('bank',this)">Bank Transfer</button></div>
+    <div id="pUpi" style="text-align:center;padding:14px 0"><div class="pay-qr">📱</div><p style="font-size:.82rem;color:var(--muted);margin-bottom:10px">Scan QR or pay to UPI ID</p><div class="upi-id">fic-escrow@axisbank</div></div>
+    <div id="pCard" style="display:none"><div class="fg"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" inputmode="numeric"></div><div class="fr"><div class="fg"><label>Expiry</label><input type="text" placeholder="MM/YY" inputmode="numeric"></div><div class="fg"><label>CVV</label><input type="password" placeholder="•••" inputmode="numeric"></div></div><div class="fg"><label>Name on Card</label><input type="text" placeholder="As on card" autocomplete="cc-name"></div></div>
+    <div id="pBank" style="display:none"><div class="bank-det"><div><strong>Account:</strong> FIC Escrow Services Pvt Ltd</div><div><strong>Account No:</strong> 1234 5678 9012</div><div><strong>IFSC:</strong> AXIS0001234</div><div><strong>Bank:</strong> Axis Bank, New Delhi</div></div></div>
+    <button class="btn-p btn-f" style="margin-top:16px" onclick="handlePay()">Pay ₹91,800 Securely →</button>
+  </div></div>
+</div>
+
+<script>
+// ===== DATA =====
+const PROJECTS=[
+  {id:1,title:'WASH Program Baseline Study',org:'WaterAid India',ico:'💧',sector:'Health',type:'NGO',dur:'3 months',budget:'₹3.5L',loc:'Rajasthan',skills:['Research','Data Collection','M&E'],desc:'Conduct baseline survey for WASH program covering 200 villages across 5 districts in Rajasthan.',apps:12},
+  {id:2,title:'Microfinance Impact Assessment',org:'SIDBI Foundation',ico:'🏦',sector:'Fin. Inclusion',type:'Government',dur:'2 months',budget:'₹2.8L',loc:'Bihar',skills:['Financial Analysis','Survey Design','CAPI'],desc:'Assess impact of SHG microfinance programs on 1,500 women beneficiaries across 3 districts of Bihar.',apps:8},
+  {id:3,title:'Climate Resilience Strategy',org:'GIZ India',ico:'🌍',sector:'Climate',type:'Multilateral',dur:'4 months',budget:'₹8L',loc:'Odisha',skills:['Climate Policy','GIS','Stakeholder Mgmt'],desc:'Develop district-level climate resilience strategy for 4 coastal districts in Odisha.',apps:21},
+  {id:4,title:'MSME Cluster Competitiveness',org:'Invest India',ico:'🏭',sector:'MSME',type:'Government',dur:'3 months',budget:'₹5L',loc:'Tamil Nadu',skills:['Industry Research','Value Chain','Economics'],desc:'Competitiveness benchmarking for footwear MSME cluster in Ambur-Vaniyambadi.',apps:7},
+  {id:5,title:'EdTech Needs Assessment',org:'Teach For India',ico:'📚',sector:'Education',type:'NGO',dur:'45 days',budget:'₹1.8L',loc:'Delhi/Mumbai',skills:['EdTech','Curriculum','Research'],desc:'Assess EdTech integration readiness in 80 low-income schools across Delhi and Mumbai.',apps:15},
+  {id:6,title:'ESG Reporting Framework',org:'Mahindra Susten',ico:'♻️',sector:'ESG',type:'Corporate',dur:'2 months',budget:'₹4.5L',loc:'Mumbai',skills:['ESG','GRI Standards','BRSR'],desc:'Design ESG reporting framework aligned with GRI, BRSR, and TCFD for a renewable energy subsidiary.',apps:9},
+];
+const CONSULTANTS=[
+  {name:'Arjun Mehta',role:'Public Health & WASH Expert',sectors:['Health','WASH'],rating:4.9,reviews:47,rate:'₹8,500',exp:'12 yrs',verified:true,top:true,avail:true,init:'AM',color:'#1B3A5C'},
+  {name:'Priya Sundaram',role:'Microfinance & Livelihoods',sectors:['Fin. Inclusion','Livelihoods'],rating:4.8,reviews:33,rate:'₹7,200',exp:'9 yrs',verified:true,top:true,avail:true,init:'PS',color:'#0D8A7E'},
+  {name:'Rahul Ganguly',role:'Climate Policy & ESG',sectors:['Climate Change','ESG'],rating:4.7,reviews:28,rate:'₹9,500',exp:'11 yrs',verified:true,top:false,avail:true,init:'RG',color:'#6A1B9A'},
+  {name:'Deepa Nair',role:'Education & Skilling Expert',sectors:['Education','Skills & Jobs'],rating:4.8,reviews:52,rate:'₹6,500',exp:'14 yrs',verified:true,top:true,avail:false,init:'DN',color:'#C62828'},
+  {name:'Siddharth Rao',role:'MSME & Value Chain',sectors:['MSME','Agriculture'],rating:4.6,reviews:21,rate:'₹7,800',exp:'8 yrs',verified:true,top:false,avail:true,init:'SR',color:'#1565C0'},
+  {name:'Ananya Krishnan',role:'M&E & Impact Assessment',sectors:['M&E','Health'],rating:4.9,reviews:61,rate:'₹8,000',exp:'13 yrs',verified:true,top:true,avail:true,init:'AK',color:'#00695C'},
+];
+const SECTORS=[{n:'Health',i:'🏥'},{n:'Education',i:'📚'},{n:'Agriculture',i:'🌾'},{n:'Climate',i:'🌍'},{n:'Livelihoods',i:'👨‍👩‍👧'},{n:'Fin. Inclusion',i:'💰'},{n:'MSME',i:'🏭'},{n:'Skills & Jobs',i:'🎓'},{n:'Eco-Tourism',i:'🌿'},{n:'ESG',i:'♻️'},{n:'IT / AI',i:'🤖'},{n:'Strategy',i:'📊'}];
+const TESTIMONIALS=[
+  {type:'org',q:'"FIC found us the perfect WASH consultant in 48 hours. The AI matching was incredibly accurate."',name:'Sunita Rajan',org:'Program Manager, WaterAid India',init:'SR',color:'#1B3A5C'},
+  {type:'con',q:'"I was between engagements 3 weeks before FIC matched me to a 4-month climate project. It changed how I work."',name:'Dr. Kavita Iyer',org:'Climate Consultant, 9 years exp.',init:'KI',color:'#0D8A7E'},
+  {type:'org',q:'"12 qualified applications in 3 days after posting our RFP. The milestone-payment system was seamless."',name:'Meera Krishnamurthy',org:'CSR Director, Mahindra Group',init:'MK',color:'#6A1B9A'},
+  {type:'con',q:'"As a consultant from a smaller city, FIC gave me access to national-level projects I could never reach before."',name:'Ranjit Bose',org:'MSME Consultant, Siliguri',init:'RB',color:'#C62828'},
+];
+const ADM=[{n:'Vikram Bhatia',type:'Consultant',sec:'Climate',date:'25 Apr'},{n:'Ritu Sharma',type:'Consultant',sec:'Health',date:'24 Apr'},{n:'Sampark Foundation',type:'Org',sec:'Livelihoods',date:'23 Apr'},{n:'Karan Mehrotra',type:'Consultant',sec:'MSME',date:'22 Apr'}];
+
+// ===== AUTH STATE =====
+let isLoggedIn = false;
+let userType = null;
+let currentLoginType = 'consultant';
+let currentRegType = 'consultant';
+
+// ===== BOOTSTRAP =====
+document.addEventListener('DOMContentLoaded',()=>{
+  initTicker(); initProjects(); initConsultants(); initSectors();
+  initTestimonials(); initReveal(); initCounters(); initAdmin();
+  initParticles();
+  setAud('org');
+  document.getElementById('hCta1').onclick=()=>document.getElementById('consultants').scrollIntoView({behavior:'smooth'});
+  document.getElementById('hCta2').onclick=()=>openM('postPrjMo');
+});
+
+// ===== SCROLL =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>40);
+  document.getElementById('scTop').classList.toggle('vis',scrollY>400);
+},{passive:true});
+
+// ===== NAV DRAWER =====
+function openDrawer(){document.getElementById('navDrawer').classList.add('open');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
+
+// ===== AUDIENCE =====
+let aud='org';
+function setAud(a){
+  aud=a;const isOrg=a==='org';
+  document.getElementById('audOrg').classList.toggle('on',isOrg);
+  document.getElementById('audCon').classList.toggle('on',!isOrg);
+  const b1=document.getElementById('hCta1'),b2=document.getElementById('hCta2');
+  if(isOrg){
+    document.getElementById('hTagline').textContent='Gets Done.';
+    document.getElementById('hSub').textContent="India's marketplace for impact organizations to find vetted freelance consultants — fast, trusted, and sector-specific.";
+    b1.textContent='Find a Consultant'; b1.onclick=()=>document.getElementById('consultants').scrollIntoView({behavior:'smooth'});
+    b2.textContent='Post a Project'; b2.onclick=()=>openM('postPrjMo');
+    document.getElementById('srchIn').placeholder='Search by skill, domain, keyword...';
+    document.getElementById('srchBtn').onclick=doSearch;
+  } else {
+    document.getElementById('hTagline').textContent='Find You.';
+    document.getElementById('hSub').textContent="India's marketplace for freelance impact consultants to find short-term projects across Health, Education, Climate, MSME, and more.";
+    b1.textContent='Browse Live Projects'; b1.onclick=()=>document.getElementById('projects').scrollIntoView({behavior:'smooth'});
+    b2.textContent='Create My Profile'; b2.onclick=()=>openM('regMo');
+    document.getElementById('srchIn').placeholder='Search by sector, skill, or keyword...';
+    document.getElementById('srchBtn').onclick=doSearchProjects;
+  }
+}
+
+// ===== PARTICLES (desktop only) =====
+function initParticles(){
+  if(window.innerWidth<600)return;
+  const cv=document.getElementById('ptcCanvas'),ctx=cv.getContext('2d');
+  let pts=[],af;
+  function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;pts=[];for(let i=0;i<45;i++)pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.8+.8,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()*.3+.08});}
+  resize();window.addEventListener('resize',resize,{passive:true});
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>cv.width)p.vx*=-1;if(p.y<0||p.y>cv.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(13,138,126,${p.a})`;ctx.fill();});
+    pts.forEach((p,i)=>pts.slice(i+1).forEach(q=>{const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<90){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(13,138,126,${.06*(1-d/90)})`;ctx.lineWidth=.7;ctx.stroke();}}));
+    af=requestAnimationFrame(draw);
+  }
+  draw();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(af);else draw();});
+}
+
+// ===== TICKER =====
+function initTicker(){
+  const tr=document.getElementById('tickTrack');
+  const html=PROJECTS.map(p=>`<div class="tick-item" onclick="showPrj(${p.id})"><div class="tick-dot"></div><div><div class="tick-org">${p.org}</div><div class="tick-t">${p.title}</div></div><div class="tick-m">${p.budget}</div><div class="tick-b">${p.sector}</div></div>`).join('');
+  tr.innerHTML=html+html;
+}
+
+// ===== PROJECTS =====
+function initProjects(){
+  document.getElementById('prjGrid').innerHTML=PROJECTS.map(p=>`
+    <div class="prj-c reveal" onclick="showPrj(${p.id})">
+      <div class="prj-top"><div class="prj-org-row"><div class="prj-org-logo">${p.ico}</div><div><div class="prj-org-nm">${p.org}</div><div class="prj-org-tp">${p.type}</div></div></div><span class="prj-live">Open</span></div>
+      <div class="prj-title">${p.title}</div>
+      <p class="prj-desc">${p.desc}</p>
+      <div class="prj-chips"><span class="chip">📍 ${p.loc}</span><span class="chip">⏱ ${p.dur}</span><span class="chip">🏷 ${p.sector}</span><span class="chip">👥 ${p.apps}</span></div>
+      <div class="prj-ft"><div><div class="prj-budget">${p.budget} <span>total</span></div><div style="font-size:.68rem;color:var(--muted);margin-top:2px">${p.skills[0]} · ${p.skills[1]}</div></div>
+      <button class="prj-apply" onclick="event.stopPropagation();applyForProject(${p.id})">Apply</button></div>
+    </div>`).join('');
+  initReveal();
+}
+
+// ===== CONSULTANTS =====
+function initConsultants(){
+  document.getElementById('conGrid').innerHTML=CONSULTANTS.map(c=>`
+    <div class="con-c reveal">
+      <div class="bdgs">${c.verified?'<span class="bdg bdg-v">✓ Verified</span>':''}${c.top?'<span class="bdg bdg-t">⭐ Top Rated</span>':''}${c.rating>=4.9?'<span class="bdg" style="background:#F3E5F5;color:#6A1B9A">🏆 Elite</span>':''}</div>
+      <div class="con-top"><div class="av" style="background:${c.color}">${c.init}</div>
+      <div class="con-info"><div class="con-nm">${c.name}</div><div class="con-rl">${c.role} · ${c.exp}</div>
+      <div class="stars-row"><span class="stars">${'★'.repeat(Math.floor(c.rating))}${'☆'.repeat(5-Math.floor(c.rating))}</span><span class="rn">${c.rating}</span><span class="rc">(${c.reviews})</span></div></div></div>
+      <div class="tags">${c.sectors.map(s=>`<span class="stag">${s}</span>`).join('')}</div>
+      <div class="con-ft"><div><div class="rate">${c.rate} <span>/ day</span></div><div class="${c.avail?'avail':'avail na'}">${c.avail?'Available Now':'Currently Busy'}</div></div>
+      <button class="btn-inv" onclick="toast('Invite sent to ${c.name}!')">Invite</button></div>
+    </div>`).join('');
+  initReveal();
+}
+
+// ===== SECTORS =====
+function initSectors(){
+  document.getElementById('secGrid').innerHTML=SECTORS.map(s=>`<div class="sec-c reveal" onclick="toast('Searching ${s.n}...')"><div class="sec-ico">${s.i}</div><h3>${s.n}</h3></div>`).join('');
+  initReveal();
+}
+
+// ===== TESTIMONIALS =====
+function initTestimonials(){
+  document.getElementById('testGrid').innerHTML=TESTIMONIALS.map(t=>`
+    <div class="test-c reveal"><span class="test-who ${t.type}">${t.type==='org'?'🏢 Organization':'👤 Consultant'}</span>
+    <div class="test-q">"</div><p class="test-t">${t.q}</p>
+    <div class="test-au"><div class="test-av" style="background:${t.color}">${t.init}</div>
+    <div><div class="test-nm">${t.name}</div><div class="test-or">${t.org}</div></div></div></div>`).join('');
+  initReveal();
+}
+
+// ===== HOW =====
+function switchHow(m,btn){
+  document.querySelectorAll('.how-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('howOrg').style.display=m==='org'?'block':'none';
+  document.getElementById('howCon').style.display=m==='con'?'block':'none';
+  initReveal();
+}
+
+// ===== SCROLL REVEAL =====
+function initReveal(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(el=>el.classList.add('vis'));return;}
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});},{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal:not(.vis)').forEach(el=>obs.observe(el));
+}
+
+// ===== COUNTERS =====
+function initCounters(){
+  if(!('IntersectionObserver' in window))return;
+  const targets=[{id:'c1',v:1247},{id:'c2',v:156},{id:'c3',v:842},{id:'c4',v:4.2,d:1}];
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done=1;targets.forEach(t=>{const el=document.getElementById(t.id);if(!el)return;let s=0,inc=t.v/80;const tm=setInterval(()=>{s=Math.min(s+inc,t.v);el.textContent=t.d?s.toFixed(1):Math.floor(s).toLocaleString('en-IN');if(s>=t.v)clearInterval(tm);},20);});}});},{threshold:.3});
+  const el=document.getElementById('stats');if(el)obs.observe(el);
+}
+
+// ===== ADMIN =====
+function initAdmin(){
+  document.getElementById('admTB').innerHTML=ADM.map(r=>`
+    <tr><td>${r.n}</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:8px;background:${r.type==='Consultant'?'#E3F2FD':'#FFF3E0'};color:${r.type==='Consultant'?'#1565C0':'#E65100'};font-weight:700">${r.type}</span></td>
+    <td>${r.sec}</td><td>${r.date}</td>
+    <td style="display:flex;gap:5px"><button class="adm-a adm-ok" onclick="toast('${r.n} approved!');this.closest('tr').remove()">Approve</button>
+    <button class="adm-a adm-no" onclick="toast('${r.n} rejected.');this.closest('tr').remove()">Reject</button></td></tr>`).join('');
+}
+function swAdm(t,btn){
+  ['dVer','dAll','dOrgs','dDis'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  const m={ver:'dVer',all:'dAll',orgs:'dOrgs',dis:'dDis'};
+  const el=document.getElementById(m[t]);if(el)el.style.display='block';
+  document.querySelectorAll('#admDashMo .tabs2 .tab2').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+}
+
+// ===== PROJECT DETAIL =====
+function showPrj(id){
+  const p=PROJECTS.find(x=>x.id===id);if(!p)return;
+  document.getElementById('prjMoB').innerHTML=`
+    <div class="pd-hd"><h2>${p.title}</h2><div class="pd-org">${p.ico} ${p.org} · ${p.type}</div>
+    <div class="pd-tags">${p.skills.map(s=>`<span class="pd-tag">${s}</span>`).join('')}<span class="pd-tag">${p.sector}</span></div></div>
+    <div class="pd-g"><div class="pd-item"><label>Budget</label><span>${p.budget}</span></div><div class="pd-item"><label>Duration</label><span>${p.dur}</span></div><div class="pd-item"><label>Location</label><span>${p.loc}</span></div><div class="pd-item"><label>Applicants</label><span>${p.apps} applied</span></div></div>
+    <p class="pd-desc">${p.desc}</p>
+    <div class="pd-btns"><button class="btn-p" style="flex:1;padding:13px;font-size:.9rem;min-height:50px;border-radius:10px" onclick="applyForProject(${p.id});closeM('prjMo')">Express Interest</button>
+    <button style="flex:1;padding:13px;border:2px solid var(--border);border-radius:10px;font-weight:700;cursor:pointer;color:var(--muted);background:none;font-size:.9rem;min-height:50px" onclick="closeM('prjMo')">Save for Later</button></div>`;
+  openM('prjMo');
+}
+
+// ===== MODALS =====
+function openM(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
+function closeM(id){document.getElementById(id).classList.remove('on');if(!document.querySelector('.ov.on'))document.body.style.overflow='';}
+function swTab(btn){btn.closest('.tabs2').querySelectorAll('.tab2').forEach(b=>b.classList.remove('on'));btn.classList.add('on');currentLoginType = btn.textContent.toLowerCase();}
+function switchReg(t){document.getElementById('fCon').style.display=t==='consultant'?'block':'none';document.getElementById('fOrg').style.display=t==='organization'?'block':'none';currentRegType = t;}
+function swPay(t,btn){['pUpi','pCard','pBank'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});const m={upi:'pUpi',card:'pCard',bank:'pBank'};const el=document.getElementById(m[t]);if(el)el.style.display='block';swTab(btn);}
+
+// ===== HANDLERS =====
+function applyForProject(id){
+  if(!isLoggedIn || userType !== 'consultant'){
+    openM('loginMo');
+    toast('Please log in as a consultant to apply for projects.');
+    return;
+  }
+  toast('Interest submitted for project ' + id + '!');
+}
+function handleLogin(){isLoggedIn = true; userType = currentLoginType; closeM('loginMo'); toast('Logged in as ' + userType + '!');}
+function handleReg(t){isLoggedIn = true; userType = t; closeM('regMo'); toast('Registered and logged in as ' + t + '!');}
+function handleAdmin(){toast('🔐 Access granted...');setTimeout(()=>{closeM('admMo');openM('admDashMo');},600);}
+function handlePostPrj(){toast('✅ Project posted! Consultants notified.');setTimeout(()=>closeM('postPrjMo'),800);}
+function handlePay(){toast('💳 Payment of ₹91,800 initiated!');setTimeout(()=>closeM('payMo'),800);}
+function doSearch(){const kw=document.getElementById('srchIn').value;toast(`🔍 Searching consultants${kw?' for "'+kw+'"':''}...`);document.getElementById('consultants').scrollIntoView({behavior:'smooth'});}
+function doSearchProjects(){const kw=document.getElementById('srchIn').value;toast(`🔍 Searching projects${kw?' for "'+kw+'"':''}...`);document.getElementById('projects').scrollIntoView({behavior:'smooth'});}
+
+// ===== TOAST =====
+let ttm;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(ttm);ttm=setTimeout(()=>el.classList.remove('show'),3200);}
+
+// ===== AI =====
+let aiMode='org',aiHist=[];
+const AISYS=`You are FIC's AI Matchmaking Assistant for India's freelance impact consulting platform. When mode is "org": generate 3 matched consultant profiles. When mode is "con": generate 3 matched project opportunities. Reply ONLY in valid JSON, no markdown.
+For org mode: {"message":"brief 1-2 sentence response","consultants":[{"name":"Full Indian Name","role":"Title","sectors":["s1","s2"],"experience":"X yrs","rating":4.8,"rate":"₹X,XXX/day","match":"why they fit in one sentence","initials":"XX","color":"#darkHexColor"}]}
+For con mode: {"message":"brief response","projects":[{"title":"Project Title","org":"Org Name","sector":"Sector","budget":"₹XL","duration":"X months","location":"City/Remote","match":"why it fits the consultant"}]}
+Use realistic Indian development sector context.`;
+
+function setAIMode(m){
+  aiMode=m;
+  document.getElementById('aiMOrg').classList.toggle('on',m==='org');
+  document.getElementById('aiMCon').classList.toggle('on',m==='con');
+  document.getElementById('aiInp').placeholder=m==='org'?'e.g. Need health consultant for baseline study in Bihar...':'e.g. I have 8 years in climate policy, seeking 2-3 month projects...';
+}
+
+async function sendAI(){
+  const inp=document.getElementById('aiInp');
+  const msg=inp.value.trim();if(!msg)return;
+  addAIMsg(msg,'user');inp.value='';
+  aiHist.push({role:'user',content:`[Mode:${aiMode}] ${msg}`});
+  const btn=document.getElementById('aiSnd');btn.disabled=true;
+  const typing=addAITyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:AISYS,messages:aiHist})});
+    const data=await res.json();typing.remove();
+    const txt=data.content[0].text;
+    let parsed;try{parsed=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{addAIMsg(txt,'bot');btn.disabled=false;return;}
+    addAIMsg(parsed.message,'bot');
+    if(parsed.consultants)renderAICons(parsed.consultants);
+    if(parsed.projects)renderAIPrjs(parsed.projects);
+    aiHist.push({role:'assistant',content:txt});
+  }catch{typing.remove();addAIMsg("Connection issue — please try again!",'bot');}
+  btn.disabled=false;
+}
+function addAIMsg(msg,type){const c=document.getElementById('aiChat');const d=document.createElement('div');d.className=`ai-msg ${type}`;d.textContent=msg;c.appendChild(d);c.scrollTop=c.scrollHeight;return d;}
+function addAITyping(){const c=document.getElementById('aiChat');const d=document.createElement('div');d.className='ai-typing';d.textContent='FIC AI is thinking...';c.appendChild(d);c.scrollTop=c.scrollHeight;return d;}
+function renderAICons(list){
+  const c=document.getElementById('aiChat');const w=document.createElement('div');w.className='ai-cards';
+  w.innerHTML=list.map(x=>`<div class="ai-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:30px;height:30px;border-radius:50%;background:${x.color||'#1B3A5C'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:800;flex-shrink:0">${x.initials||x.name.slice(0,2)}</div><div><div class="ai-cn">${x.name}</div><div class="ai-cr">${x.role}</div></div></div><div style="color:#FFA726;font-size:.76rem;margin-bottom:3px">${'★'.repeat(Math.floor(x.rating||4.8))} ${x.rating}</div><div style="color:var(--teal);font-size:.76rem;font-weight:700;margin-bottom:4px">${x.rate}</div><div style="color:rgba(255,255,255,.42);font-size:.7rem;font-style:italic;margin-bottom:8px">${x.match}</div><button style="width:100%;background:var(--teal);color:#fff;border:none;padding:8px;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;min-height:36px" onclick="toast('Request sent to ${x.name}!')">Send Request</button></div>`).join('');
+  c.appendChild(w);c.scrollTop=99999;
+}
+function renderAIPrjs(list){
+  const c=document.getElementById('aiChat');const w=document.createElement('div');w.className='ai-cards';
+  w.innerHTML=list.map(p=>`<div class="ai-card"><div class="ai-cn">${p.title}</div><div class="ai-cr">${p.org} · ${p.sector}</div><div style="color:var(--teal);font-size:.76rem;font-weight:700;margin:4px 0">${p.budget} · ${p.duration}</div><div style="color:rgba(255,255,255,.52);font-size:.7rem;margin-bottom:3px">📍 ${p.location}</div><div style="color:rgba(255,255,255,.42);font-size:.7rem;font-style:italic;margin-bottom:8px">${p.match}</div><button style="width:100%;background:var(--teal);color:#fff;border:none;padding:8px;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;min-height:36px" onclick="toast('Interest submitted!')">Apply</button></div>`).join('');
+  c.appendChild(w);c.scrollTop=99999;
+}
+</script>
+</body>
+</html>

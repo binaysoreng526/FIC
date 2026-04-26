@@ -923,7 +923,7 @@ function initConsultants(){
       <div class="stars-row"><span class="stars">${'★'.repeat(Math.floor(c.rating))}${'☆'.repeat(5-Math.floor(c.rating))}</span><span class="rn">${c.rating}</span><span class="rc">(${c.reviews})</span></div></div></div>
       <div class="tags">${c.sectors.map(s=>`<span class="stag">${s}</span>`).join('')}</div>
       <div class="con-ft"><div><div class="rate">${c.rate} <span>/ day</span></div><div class="${c.avail?'avail':'avail na'}">${c.avail?'Available Now':'Currently Busy'}</div></div>
-      <button class="btn-inv" onclick="toast('Invite sent to ${c.name}!')">Invite</button></div>
+<button class="btn-inv" onclick="inviteConsultant('${c.name}')">Invite</button></div>
     </div>`).join('');
   initReveal();
 }
@@ -1011,6 +1011,14 @@ function applyForProject(id){
     return;
   }
   toast('Interest submitted for project ' + id + '!');
+}
+function inviteConsultant(name){
+  if(!isLoggedIn || userType !== 'organization'){
+    openM('loginMo');
+    toast('Please log in as an organization to invite consultants.');
+    return;
+  }
+  toast('Invite sent to ' + name + '!');
 }
 function handleLogin(){isLoggedIn = true; userType = currentLoginType; closeM('loginMo'); toast('Logged in as ' + userType + '!');}
 function handleReg(t){isLoggedIn = true; userType = t; closeM('regMo'); toast('Registered and logged in as ' + t + '!');}
